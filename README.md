@@ -33,7 +33,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 To set up this Active Directory Environment, we'll need to create two virtual machines: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual netowrk and a subnet. 
 
-After that, again within that same resource gropu, create the virtual machine that will serve as the DC. Remember that in order for it to function as DC, the "image" needs to be specifically Micorsoft Server OS. Either one of the two in the image below will work.
+After that, again within that same resource group, create the virtual machine that will serve as the DC. Remember that in order for it to function as DC, the "image" needs to be specifically Micorsoft Server OS. Either one of the two in the image below will work.
 
 ![image](https://github.com/user-attachments/assets/837e62ab-c68d-4af1-af74-a541ae6da5b2)
 
@@ -52,7 +52,11 @@ After that within the "IP Configurations" pane, you should see an IP address nam
 ![image](https://github.com/user-attachments/assets/204ffdf6-489f-471c-991d-f4ce02ce6ed1)
 
 
-Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. Let's remote into the DC itself and open up the Control Panel. After that, click on "System and Security" -> "Windows Defender Firewall" -> "Advanced Settings". From within here, there should be a link titled "Windows Defender Firewall Properties". 
+Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. Let's remote into the DC itself and open up the Control Panel. 
+
+Another side note: open openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes" for this. Resuming:
+
+After that, click on "System and Security" -> "Windows Defender Firewall" -> "Advanced Settings". From within here, there should be a link titled "Windows Defender Firewall Properties". 
 
 ![image](https://github.com/user-attachments/assets/4b30beff-928a-4806-8d30-f0e2d8d6b36c)
 
@@ -70,7 +74,22 @@ You can now close out of that window. We'll move on to setting up our client mac
 
 Back in Azure, create another virtual machine, this time with a Windows 10 Pro "image"/OS. Also, make sure to configure it to be in the same geographical location as well as the same virtual network as the DC.
 
-The next step will be to configure the client's DNS settings to the DC's private IP address. Of course for this you will need to locate the private IP address of the DC.
+The next step will be to configure the client's DNS settings to the DC's private IP address. Of course for this you will need to locate the private IP address of the DC. Go again to the networks settings within the DC virtual machine settings. Again click on the network interface settings. This time however, we'll click on "DNS Servers": 
+
+![image](https://github.com/user-attachments/assets/9e152613-6887-4f72-8112-b04b6cbacd62)
+
+Change the setting from "Inherit from virtual network" to "Custom" then enter in the private IP address of your DC:
+
+![image](https://github.com/user-attachments/assets/5067db87-8b02-4271-a8d5-8a45190cb6fa)
+
+Don't forget to hit "Save" at the top when you're finished with that. Now we're ready to move to the last part of the Setup Section. From the Azure Portol, restart your client machine. Then remote log in to it. Using the command prompt, ping your DC's private IP address and ensure that it succeeded: 
+
+![image](https://github.com/user-attachments/assets/528d556c-1351-446e-8340-ae3e35dfea70)
+
+Finally, open PowerShell and run **ipconfig /all**. The output for the DNS settings should have your DC's private IP address:
+
+![image](https://github.com/user-attachments/assets/a64c0075-e20f-48a7-b02e-ca61d7f7f08b)
+
 
 
 
