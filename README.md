@@ -66,9 +66,11 @@ Click "Apply" then "OK" to confirm these edits. You should then see your Windows
 
 ![image](https://github.com/user-attachments/assets/865814c3-c0c9-4ad0-b7ac-71dad6fbf3ef)
 
-You can now close out of that window.
+You can now close out of that window. We'll move on to setting up our client machine now.
 
+Back in Azure, create another virtual machine, this time with a Windows 10 Pro "image"/OS. Also, make sure to configure it to be in the same geographical location as well as the same virtual network as the DC.
 
+The next step will be to configure the client's DNS settings to the DC's private IP address. Of course for this you will need to locate the private IP address of the DC.
 
 
 
