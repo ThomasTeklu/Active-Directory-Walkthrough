@@ -184,9 +184,10 @@ You will then enter "Domain Users" in the object names field and hit enter. Sele
 
 # Creating Users
 
-Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and within the new file, paste the contents of [this script](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1). Run the script and observe the accounts being created, which should look something like this:
+Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and within the new file, paste the contents of [this script](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1). Run the script and observe the accounts being created, the process of which can be seen by clicking on the image below:
 
-https://imgur.com/2NlibYS 
+[![Alt text](https://i.imgur.com/MCj3oVf.png)](https://imgur.com/2NlibYS)
+
 
 When finished, open up ADUC and observe the accounts in the appropriate OU (_EMPLOYEES).
 
@@ -195,7 +196,55 @@ As a final test, attempt to log into Client-1 with one of the accounts (remember
 
 ### Account Management
 
-We'll wrap up our Active Directory activities by experimenting with enabling and unlocking accounts, as well as reseting passwords. First things first, get logged in to your DC if you're not already. Locate to the employees OU from within ADUC and select a random user. Take note of its credentials and then 
+We'll wrap up our Active Directory activities by experimenting with enabling and unlocking accounts, as well as reseting passwords. First things first, get logged in to your DC if you're not already. Locate to the employees OU from within ADUC and select a random user. Take note of its credentials and then attempt to log into the client device with a bad password 10 times. 
+
+Notice that nothing is happening. You're simply not able to log in and offered another chance to try. Typically you would want some type of prevention against this to ensure that brute force attacks or something of the sort are unsuccessful. That's what we'll move on to setting up right now. 
+
+# Configuring Account Lockout Group Policy
+
+Log into the DC. Click the seach bar and type gpmc.msc, then press Enter. This is the Group Policy Management Console from which we will configure the account policy:
+
+![image](https://github.com/user-attachments/assets/c7e9824c-c574-434d-b3b0-61b463cc93c4)
+
+Navigate to the Group Policy Objects, then select "New" to make a new Group Policy Object (GPO):
+
+![image](https://github.com/user-attachments/assets/8b8a6173-d041-40ba-aabc-f16e2c7cf705)
+
+Give the new GPO the name "Account Lockout Policy". Now, right click that newly created GPO and select "Edit" to open the Group Policy Management Editor. Expand the following: Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy.
+
+There are three main settings that you'll configure here: 
+1. Account Lockout Duration
+2. Account Lockout Threshold
+3. Resent Account Lockout Counter After
+
+To edit any of them, double click on them. Start with Account Lockout Duration (time that an account remains locked before it's automatically unlocked again). Select "Define this policy setting" and set it to 30 minutes. Hit "Apply" then "OK".
+
+Note that upon changing this setting, you'll automatically be offered other suggested value changes for the two categories:
+
+![image](https://github.com/user-attachments/assets/a8093460-018b-4c83-900f-132510d5c42d)
+
+Hit "OK" to move on and you'll change them right after. For Account Lockout Threshold (amount of failed login attempts that trigger a lockout), define 3 invalid login attempts, and for Reset Account Lockout Counter After (time after which failed login attempts counter is reset) define 15 minutes.
+
+After setting those values, you'll need to link the GPO to an Organizational Unit (OU) or domain wherein you want the policy to apply. Go back to the Group Policy Manager Window and right-click on your domain, then select "Link an Existing GPO". Within that window, select the one you just created: Account Lockout Policy.
+
+We'll now force a Group Policy update by opening Command Prompt and typing in "gpupdate /force", then hitting enter. To verify the policy, you can use the rsop.msc tool on a client machine to see the applied settings.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
