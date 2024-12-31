@@ -167,7 +167,25 @@ Log in to the client machine as the original local admin. Then, right click on t
 
 ![image](https://github.com/user-attachments/assets/7adc325b-b972-4ba0-91e6-09e8dee166a8)
 
-From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will show, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. Use your credentials (with the domain specification
+From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will show, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. Use your credentials (with the domain specification at the beginning) to authorize this domain joining. When that's done, you'll get a "Welcome to the domain" message. Close that and your device will automatically restart to enforce the changes just made.
+
+Verify that your client device shows up in Active Directory Users and Computers (ADUC) by logging back into your DC. Create a new OU named "_CLIENTS" and put your client device in there.
+
+With that, you have successfully joined your client machine to your domain.
+
+
+
+## Setup Remote Desktop
+
+Now you will enable Remote Desktop for non-administrative users on the client device. Log into the client device, this time as your domain admin account. Right click on the start icon then select "System". Inside of that select "Remote Desktop" and within the "Remote Desktop Users" window that pops up select "Add". 
+
+You will then enter "Domain Users" in the object names field and hit enter. Select "Ok" after that and you've now enabled any domain user (even non-administrative ones) to log into the client device.
+
+
+## Creating Users
+
+Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and within the new file, paste the contents of 
+
 
 
 
