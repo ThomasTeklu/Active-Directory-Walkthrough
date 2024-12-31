@@ -144,11 +144,30 @@ When moving on from username to password creation, deselect the check mark next 
 
 ![image](https://github.com/user-attachments/assets/0c26c3d0-d045-4feb-b973-55c32b043ae3)
 
-You should now have a new user named "Jane Doe" within your employees group.
+You should now have a new user named "Jane Doe" within your employees group. Now to actually give this account admin privileges, we need to add it to the "Domain Admins" Security Group. Right click on the account and hit "Properties". Within the Properties window, go to the "Member Of" tab and select "Add":
 
-Right click on Jane Doe and select the "move" option. Move her to the newly-created Admin Security Group. Open the Admins folder to confirm the move was succesful. 
+![image](https://github.com/user-attachments/assets/f3e340e7-9cec-4edc-8cd3-135aee637cfb)
+
+You'll be taken to another window to select which groups you want to add this account to. In the field enter "Domain Admins" and hit enter. Automatically you'll be taken back to the "Members Of" tab and you should see "Domain Admins" within the panel now: 
+
+![image](https://github.com/user-attachments/assets/48a8089b-cbe4-4c8f-afc0-affaf05adb7c)
+
+To wrap this step up, click "Apply" and "OK" at the bottom of the window.
+
+For organizational measures, right click on Jane Doe and select the "move" option. Move her to the newly-created Admin Security Group. Open the Admins folder to confirm the move was succesful. 
 
 Log out and log back in as "mydomain.com\jane_admin" and use jane_admin as your admin account from here on out.
+
+
+So now we have established Active Directory services on our server, created our domain, and have designated a particular account as our admin account for the DC. Having focused on our server-side configuration so much, let's go on and move towards setting up our client-side as well.
+
+## Joining Client to Domain
+
+Log in to the client machine as the original local admin. Then, right click on the start icon in the bottom left corner. From there, click "System" and within the window that pops up, select "System Protection". Switch to the "Computer Name" tab and that's where you will see the option to "rename this computer or change its domain or workgroup":
+
+![image](https://github.com/user-attachments/assets/7adc325b-b972-4ba0-91e6-09e8dee166a8)
+
+From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will show, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. Use your credentials (with the domain specification
 
 
 
