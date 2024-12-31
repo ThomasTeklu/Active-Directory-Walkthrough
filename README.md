@@ -90,7 +90,63 @@ Finally, open PowerShell and run **ipconfig /all**. The output for the DNS setti
 
 ![image](https://github.com/user-attachments/assets/a64c0075-e20f-48a7-b02e-ca61d7f7f08b)
 
+And with that, you have successfully completed your domain controller and client setup. In the next section below, you will be guiding through installation of Active Directory itself.
 
+
+
+
+# Installation of Active Directory
+
+Remote into your DC. Since the domain controller is running on Windows Server OS, the initial view will be different from other OS's. You should immediately see the Server Manager open upon login:
+
+![image](https://github.com/user-attachments/assets/32481eb9-60da-4a4d-b76e-39b1dae3d715)
+
+Next, to turn this "blank" (so to speak) server into an Active Directory server, first click on "Add roles and features". For the "Before You Begin", "Installation Type", and "Server Selection" pages, select "Next". Then when you arrive at the "Server Roles" page, you will see a long list of potential services that you could configure to run on your server. We are concerned with Active Directory Domain Services, so that is what we'll select from the list:
+
+![image](https://github.com/user-attachments/assets/09da0585-46b7-4246-8eb5-9505ab770b1e)
+
+Upon selecting its check mark to enable the features, a pop-up window will appear asking to add additional features that are needed for Active Directory. Click "Add Features" then "Next" back in the original window. For "Features" and "AD DS" select "Next" and then within the Confirmation section, check the option for automatic restart:
+
+![image](https://github.com/user-attachments/assets/d836a7dd-086b-4fa9-a6f4-fbcd15709722)
+
+Now hit "Install" and wait for it to complete. Upon completion, you should see the flag icon at the top right has a hazard sign next to it:
+
+![image](https://github.com/user-attachments/assets/1229a7df-4375-4dc4-85fa-0f806d2d2180)
+
+Click on it and then on the "Promote this server to a domain controller" prmopt. From there, select the "Add a new forest" option and specify your desired domain name (i.e. {yourdomainname}.com):
+
+![image](https://github.com/user-attachments/assets/fbdc21a2-56e7-4f8a-9159-f5c4c3f0f51a)
+
+Hit "Next" to move on to "Domain Controller Options", then set your Directory Services Restore Mode password. Then keep clicking "Next" until you arrive at the "Prerequisites Check" page. If all checks out, you should see a small banner at the top of the window saying as much:
+
+![image](https://github.com/user-attachments/assets/bfa743ff-76c2-45c4-ab19-4e6c915d028e)
+
+That's your green light to go ahead and hit "Install" and wait for that to come to a close. You will be logged out since the device has to restart. Upon logging back in, since your virtual machine is now properly a domain controller, your initial credentials won't work. You'll have to add your domain name and a backslash to the front of your username (mydomain.com\example). Your password will still remain as it was. Log in as described above, and then we'll move on to Internal Configuration.
+
+
+
+# Internal Configuration
+
+Our first step in this section will be to create a Domain Admin user within the domain
+
+
+Open up Active Directory Users and Computers either by searching it in the Windows search bar, or by click the start menu then locating to Windows Administrative Tools:
+
+![image](https://github.com/user-attachments/assets/4026b7fe-b68f-491b-99e9-8ee0aa5b9512)
+
+Right click **on** your domain name itself then select "New" and "Organizational Unit". Name it "_EMPLOYEES" (include the underscore in the front). Using the same technique, create another OU named "_ADMINS". 
+
+Within the Employees folder (remember, right clicking on it) create a "user". We'll name them "Jane Doe" with a username of "jane_admin". The password is up to you, just remember to keep track of it of course:
+
+![image](https://github.com/user-attachments/assets/cb62fd21-c3aa-45ec-a55b-e2df1c423a0c)
+
+When moving on from username to password creation, deselect the check mark next to "User must change password at next login"
+
+![image](https://github.com/user-attachments/assets/0c26c3d0-d045-4feb-b973-55c32b043ae3)
+
+You should now have a new user named "Jane Doe" within your employees group.
+
+Right click on Jane Doe and select the "move" option. Move her to the newly-created Admin Security Group. Open the Admins folder to confirm the move was succesful. 
 
 
 <p>
