@@ -227,7 +227,20 @@ Hit "OK" to move on and you'll change them right after. For Account Lockout Thre
 
 After setting those values, you'll need to link the GPO to an Organizational Unit (OU) or domain wherein you want the policy to apply. Go back to the Group Policy Manager Window and right-click on your domain, then select "Link an Existing GPO". Within that window, select the one you just created: Account Lockout Policy.
 
+**NOTE**: While within the Group Policy Management window, underneath the "Group Policy Objects" branch, there is a "Default Domain Policy" policy. Since there is a parametr within this policy that interferes with our desired settings, we're going to disable the policy. Right click on "Default Domain Policy" then open "GPO Status" and select "All Settings Disabled":
+
+![image](https://github.com/user-attachments/assets/6d150a1a-e97f-4055-b180-8dd7e7efef62)
+
+
 We'll now force a Group Policy update by opening Command Prompt and typing in "gpupdate /force", then hitting enter. To verify the policy, you can use the rsop.msc tool on a client machine to see the applied settings.
+
+Log into your client machine using your admin account, then go to the search box and type in "rsop.msc" and hit enter. Using the same expansion path as before (Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy), check to see if the settings you configured are in effect.
+
+![image](https://github.com/user-attachments/assets/963975ae-c0ab-4a47-ab4e-7df46bf5da15)
+
+With that, you've just configured your domain's account lockout policy! Let's get back dealing with account lockouts.
+
+
 
 
 
