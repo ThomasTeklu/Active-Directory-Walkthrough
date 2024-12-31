@@ -184,7 +184,10 @@ You will then enter "Domain Users" in the object names field and hit enter. Sele
 
 ## Creating Users
 
-Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and within the new file, paste the contents of 
+Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and within the new file, paste the contents of [this script](Generate-Names-Create-Users.ps1). Run the script and observe the accounts being created. When finished, open up ADUC and observe the accounts in the appropriate OU (_EMPLOYEES).
+
+As a final test, attempt to log into Client-1 with one of the accounts (remember to take note of the password from within the script).
+
 
 
 
