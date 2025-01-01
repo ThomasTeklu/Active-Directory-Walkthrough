@@ -28,12 +28,6 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Internal Configuration
 - Account Management
 
-
-
-
-
-
-
 # DC and Client Setup
 
 To set up this Active Directory Environment, we'll need to create two virtual machines: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual netowrk and a subnet. 
