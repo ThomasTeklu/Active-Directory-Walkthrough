@@ -2,7 +2,7 @@
 <img src="https://i.imgur.com/pU5A58S.png" alt="Microsoft Active Directory Logo"/>
 </p>
 
-<h1>On-premises Active Directory Deployed in the Cloud (Azure)</h1>
+<h1>On-premises Active Directory Walkthrough (Azure Deployment)</h1>
 This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines. In addition to implementation, a walkthrough of specific features utilizable within Active Directory is provided to enable those following along to replicate the walkthrough's results. Through completion of this tutorial, one should attain a better understanding of Active Directory overall, as well as related aspects such as domain controllers, client devices, administrative value, security policies, account management, etc. <br />
 
 
