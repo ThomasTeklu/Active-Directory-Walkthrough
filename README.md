@@ -55,7 +55,7 @@ Now that we've established the DC's private IP address as static, we're going to
 
 **NOTE:** Upon openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes". Resuming:
 
-#LEFT OFF HERE
+# LEFT OFF HERE
 
 After that, click on "System and Security" -> "Windows Defender Firewall" -> "Advanced Settings". From within here, there should be a link titled "Windows Defender Firewall Properties". 
 
