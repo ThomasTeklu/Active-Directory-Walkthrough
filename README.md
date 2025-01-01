@@ -30,15 +30,15 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 # Domain Controller and Client Setup
 
-To set up this Active Directory Environment, we'll need to create two virtual machines: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual netowrk and a subnet. 
+To set up this Active Directory environment, we'll need to create two virtual machines within Azure: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual network and a subnet. The default settings will suffice.
 
-After that, again within that same resource group, create the virtual machine that will serve as the DC. Remember that in order for it to function as DC, the "image" needs to be specifically Micorsoft Server OS. Either one of the two in the image below will work.
+After that, within that same resource group, create the virtual machine that will serve as the DC and name it accordingly (ex: DC-1, Domain-Controller, etc). Remember that in order for it to function as a DC, the "image" needs to be specifically Micorsoft Server OS. Either one of the two options displayed in the image below will work:
 
 ![image](https://github.com/user-attachments/assets/837e62ab-c68d-4af1-af74-a541ae6da5b2)
 
-As a side note, as much as you can, try to deploy all of these resources to the same regional area.
+**Note:** Deploy all of these resources to the same regional area.
 
-After taking note of your DC credentials, you need to set the DC's NIC private IP address to be static. To do this we'll need to open the VM within Azure then go to its Network settings.
+After taking note of your DC credentials (Administrator Account credentials from the creation of the virtual machine), you need to set the DC's Network Interface Card's (NIC) private IP address to be **static**. To do this we'll need to open the VM within Azure then go to its Network settings.
 
 ![image](https://github.com/user-attachments/assets/43e6f9a4-ec14-402f-81a3-6b6c5c13debc)
 
