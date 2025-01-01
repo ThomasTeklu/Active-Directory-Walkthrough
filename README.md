@@ -217,22 +217,22 @@ There are three main settings that you'll configure here:
 2. Account Lockout Threshold
 3. Resent Account Lockout Counter After
 
-To edit any of them, double click on them. Start with Account Lockout Duration (time that an account remains locked before it's automatically unlocked again). Select "Define this policy setting" and set it to 30 minutes. Hit "Apply" then "OK".
+To edit any of them, double click on them. Start with Account Lockout Duration (time that an account remains locked before it's automatically unlocked again). Select "Define this policy setting" and set it to **30 minutes**. Hit "Apply" then "OK".
 
 Note that upon changing this setting, you'll automatically be offered other suggested value changes for the two categories:
 
 ![image](https://github.com/user-attachments/assets/a8093460-018b-4c83-900f-132510d5c42d)
 
-Hit "OK" to move on and you'll change them right after. For Account Lockout Threshold (amount of failed login attempts that trigger a lockout), define 3 invalid login attempts, and for Reset Account Lockout Counter After (time after which failed login attempts counter is reset) define 15 minutes.
+Hit "OK" to move on and you'll change them right after. For Account Lockout Threshold (amount of failed login attempts that trigger a lockout), define **3 invalid login attempts**, and for Reset Account Lockout Counter After (time after which failed login attempts counter is reset) define 15 minutes.
 
 After setting those values, you'll need to link the GPO to an Organizational Unit (OU) or domain wherein you want the policy to apply. Go back to the Group Policy Manager Window and right-click on your domain, then select "Link an Existing GPO". Within that window, select the one you just created: Account Lockout Policy.
 
-**NOTE**: While within the Group Policy Management window, underneath the "Group Policy Objects" branch, there is a "Default Domain Policy" policy. Since there is a parametr within this policy that interferes with our desired settings, we're going to disable the policy. Right click on "Default Domain Policy" then open "GPO Status" and select "All Settings Disabled":
+**NOTE**: While within the Group Policy Management window, underneath the "Group Policy Objects" branch, there is a policy called "Default Domain Policy". Since there is a parameter within this policy that interferes with our desired settings, we're going to disable it. Right click on "Default Domain Policy" then open "GPO Status" and select "All Settings Disabled":
 
 ![image](https://github.com/user-attachments/assets/6d150a1a-e97f-4055-b180-8dd7e7efef62)
 
 
-We'll now force a Group Policy update by opening Command Prompt and typing in "gpupdate /force", then hitting enter. To verify the policy, you can use the rsop.msc tool on a client machine to see the applied settings.
+We'll now force a Group Policy update by opening Command Prompt and typing in "gpupdate /force", then hitting enter. To verify the policy, you can use the rsop.msc tool on a **client machine** to see the applied settings.
 
 Log into your client machine using your admin account, then go to the search box and type in "rsop.msc" and hit enter. Using the same expansion path as before (Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy), check to see if the settings you configured are in effect.
 
@@ -240,11 +240,19 @@ Log into your client machine using your admin account, then go to the search box
 
 With that, you've just configured your domain's account lockout policy! Let's get back dealing with account lockouts.
 
+### Account Lockouts
 
+Using the same account that you started this section off with, try to log in again to the client machine, this time with a bad password **three times**. Because of the GPO that we set up, you should receive a message saying that this account has been locked. 
 
+![image](https://github.com/user-attachments/assets/219b3968-7517-4cbf-b792-668d4213b37f)
 
+You're GPO was successfully configured! Now log into the DC and unlock the account from within ADUC. Within your domain, right click on the employees OU and select "find". Type in the name of the account you locked out and hit enter. The account should pop up in the bottom section of the window. In turn, right click on the account and select "properties". Then navigate to the Account tab. Within it, you'll see a blank check box saying "Unlock account" next to it along with a small description of the account being locked: 
 
+![image](https://github.com/user-attachments/assets/284177ea-f63d-4f40-8915-823707cb7e98)
 
+Select the box then "Apply" and "OK" to finish unlocking it. Return to the client device and log in with the proper password.
+
+### Enabling and Disabling Accounts
 
 
 
