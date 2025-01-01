@@ -250,18 +250,31 @@ You're GPO was successfully configured! Now log into the DC and unlock the accou
 
 ![image](https://github.com/user-attachments/assets/284177ea-f63d-4f40-8915-823707cb7e98)
 
-Select the box then "Apply" and "OK" to finish unlocking it. Return to the client device and log in with the proper password.
+Select the box then "Apply" and "OK" to finish unlocking it. Return to the client device and log in with the proper password to test the reset.
 
 ### Enabling and Disabling Accounts
 
+Going back to the DC, open up ADUC and find the account within the employees OU. You can use the same "find" feature to do so. Right click on the account and, this time, select "Disable Account":
 
+![image](https://github.com/user-attachments/assets/a8fd6210-cf73-49d8-8c96-847fd394f800)
 
+Attempt to log in with it and take note of the message that appears. After that, go back to ADUC and re-enable the account using the same method you used to disable (only difference is "Disable Account" will be "Enable Account"); log in with the account afterwards to ensure it's been enabled again.
 
+And finally for the last step of all: observing logs.
 
+### Observing Logs
 
+From within the client user account, type "eventvwr.msc" into the Windows search bar. Run it as an administrator and user your domain controller admin account credentials to authorize such. 
 
+Within the Event Viewer, in the left side column open "Windows Logs" then select "Security" to view the relevant log events. If you remember, as a part of our account lockout activities was to purposefully enter in incorrect passwords to force lock our account. Eventually, if you scroll down through the logs, you should find three "Audit Failure" logs with the Task Category of "Logon" grouped together: 
 
+![image](https://github.com/user-attachments/assets/4d932a40-1092-4564-9a07-c0ab35d1f3ca)
 
+If you scroll further within the logs, you'll find the same thing, this time with the 10 initial attempts that we began with: 
+
+![image](https://github.com/user-attachments/assets/d51446e1-abfb-401d-ab1a-fbf9dfc7e821)
+
+With that, you've seen how the actions we take appear within our event viewer. Not only that, but you've also finished this tutorial! If all has gone well, you should've gotten a better intuition as to how Active Directory works. Go through it mutltiple times to further strengthen that knowledge. 
 
 
 
