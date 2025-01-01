@@ -28,7 +28,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Internal Configuration
 - Account Management
 
-# DC and Client Setup
+# Domain Controller and Client Setup
 
 To set up this Active Directory Environment, we'll need to create two virtual machines: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual netowrk and a subnet. 
 
@@ -160,7 +160,7 @@ Log out and log back in as "mydomain.com\jane_admin" and use jane_admin as your 
 
 So now we have established Active Directory services on our server, created our domain, and have designated a particular account as our admin account for the DC. Having focused on our server-side configuration so much, let's go on and move towards setting up our client-side as well.
 
-# Joining Client to Domain
+### Joining Client to Domain
 
 Log in to the client machine as the original local admin. Then, right click on the start icon in the bottom left corner. From there, click "System" and within the window that pops up, select "System Protection". Switch to the "Computer Name" tab and that's where you will see the option to "rename this computer or change its domain or workgroup":
 
@@ -174,14 +174,14 @@ With that, you have successfully joined your client machine to your domain.
 
 
 
-# Setup Remote Desktop
+### Setup Remote Desktop
 
 Now you will enable Remote Desktop for non-administrative users on the client device. Log into the client device, this time as your domain admin account. Right click on the start icon then select "System". Inside of that select "Remote Desktop" and within the "Remote Desktop Users" window that pops up select "Add". 
 
 You will then enter "Domain Users" in the object names field and hit enter. Select "Ok" after that and you've now enabled any domain user (even non-administrative ones) to log into the client device.
 
 
-# Creating Users
+### Creating Users
 
 Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and within the new file, paste the contents of [this script](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1). Run the script and observe the accounts being created, the process of which can be seen by clicking on the image below:
 
@@ -193,13 +193,13 @@ When finished, open up ADUC and observe the accounts in the appropriate OU (_EMP
 As a final test, attempt to log into Client-1 with one of the accounts (remember to take note of the password from within the script).
 
 
-### Account Management
+# Account Management
 
 We'll wrap up our Active Directory activities by experimenting with enabling and unlocking accounts, as well as reseting passwords. First things first, get logged in to your DC if you're not already. Locate to the employees OU from within ADUC and select a random user. Take note of its credentials and then attempt to log into the client device with a bad password 10 times. 
 
 Notice that nothing is happening. You're simply not able to log in and offered another chance to try. Typically you would want some type of prevention against this to ensure that brute force attacks or something of the sort are unsuccessful. That's what we'll move on to setting up right now. 
 
-# Configuring Account Lockout Group Policy
+### Configuring Account Lockout Group Policy
 
 Log into the DC. Click the seach bar and type gpmc.msc, then press Enter. This is the Group Policy Management Console from which we will configure the account policy:
 
