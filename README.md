@@ -36,24 +36,26 @@ After that, within that same resource group, create the virtual machine that wil
 
 ![image](https://github.com/user-attachments/assets/837e62ab-c68d-4af1-af74-a541ae6da5b2)
 
-**Note:** Deploy all of these resources to the same regional area.
+**NOTE:** Deploy all of these resources to the same regional area.
 
-After taking note of your DC credentials (Administrator Account credentials from the creation of the virtual machine), you need to set the DC's Network Interface Card's (NIC) private IP address to be **static**. To do this we'll need to open the VM within Azure then go to its Network settings.
+After taking note of your DC credentials (Administrator Account credentials from the creation of the virtual machine), you need to set the DC's Network Interface Card's (NIC) private IP address to be **static**. To do this we'll need to open the VM within Azure then go to its Network settings:
 
 ![image](https://github.com/user-attachments/assets/43e6f9a4-ec14-402f-81a3-6b6c5c13debc)
 
-Then you need to click on your network interface settings.
+Then you need to select your network interface settings:
 
 ![image](https://github.com/user-attachments/assets/b5305161-8250-43c1-bca4-b29a4a8f27d7)
 
-After that within the "IP Configurations" pane, you should see an IP address named "ipconfig1". Click on it to manage its settings. Now you should see the option to change the private address from dynamic to static. Go ahead and do such now then hit "Save" at the bottom to finish up.
+After that within the "IP configurations" pane, you should see an IP address named "ipconfig1". Click on it to manage its settings. Now you should see the option to change the private address from Dynamic to Static. Select "Static" then hit "Save" at the bottom to finish up:
 
 ![image](https://github.com/user-attachments/assets/204ffdf6-489f-471c-991d-f4ce02ce6ed1)
 
 
-Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. Let's remote into the DC itself and open up the Control Panel. 
+Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. Let's remote into the DC virtual machine itself and open up the Control Panel. 
 
-Another side note: open openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes" for this. Resuming:
+**NOTE:** Upon openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes". Resuming:
+
+#LEFT OFF HERE
 
 After that, click on "System and Security" -> "Windows Defender Firewall" -> "Advanced Settings". From within here, there should be a link titled "Windows Defender Firewall Properties". 
 
