@@ -186,31 +186,33 @@ Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and
 
 When finished, open up ADUC and observe the accounts in the appropriate OU (_EMPLOYEES).
 
-As a final test, attempt to log into Client-1 with one of the accounts (remember to take note of the password from the top of the script).
+As a final test, attempt to log into the client device with one of the accounts (remember to take note of the password from the top of the imported script).
 
 
 # Account Management
 
-We'll wrap up our Active Directory activities by experimenting with enabling and unlocking accounts, as well as reseting passwords. First things first, get logged in to your DC if you're not already. Locate to the employees OU from within ADUC and select a random user. Take note of its credentials and then attempt to log into the client device with a bad password 10 times. 
+The last part of this Active Directory tutorial concerns enabling and unlocking accounts, as well as reseting passwords. First things first, get logged in to your DC if you're not already. Locate to the employees OU from within ADUC and select a random user. Take note of its credentials and then attempt to log into the client device with a bad password 10 times. 
 
-Notice that nothing is happening. You're simply not able to log in and offered another chance to try. Typically you would want some type of prevention against this to ensure that brute force attacks or something of the sort are unsuccessful. That's what we'll move on to setting up right now. 
+Notice that nothing is happening. You're simply not able to log in and offered another chance to try. Typically you would want some type of prevention against this to ensure that brute force attacks and the like are unsuccessful. That's what we'll move on to setting up right now. 
 
 ### Configuring Account Lockout Group Policy
 
-Log into the DC. Click the seach bar and type gpmc.msc, then press Enter. This is the Group Policy Management Console from which we will configure the account policy:
+Within the DC, type "gpmc.msc" in the Windows seach bar, then press Enter. This will open the Group Policy Management Console:
 
 ![image](https://github.com/user-attachments/assets/c7e9824c-c574-434d-b3b0-61b463cc93c4)
 
-Navigate to the Group Policy Objects, then select "New" to make a new Group Policy Object (GPO):
+Expand the Forest, then the Domains, then your domain until you see "Group Policy Objects". Right click on it then select "New" to create a new Group Policy Object (GPO):
 
 ![image](https://github.com/user-attachments/assets/8b8a6173-d041-40ba-aabc-f16e2c7cf705)
 
-Give the new GPO the name "Account Lockout Policy". Now, right click that newly created GPO and select "Edit" to open the Group Policy Management Editor. Expand the following: Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy.
+Give the new GPO the name "Account Lockout Policy". Right click that newly created GPO and select "Edit" to open the Group Policy Management Editor. 
+
+Expand the following: Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy.
 
 There are three main settings that you'll configure here: 
 1. Account Lockout Duration
 2. Account Lockout Threshold
-3. Resent Account Lockout Counter After
+3. Reset Account Lockout Counter After
 
 To edit any of them, double click on them. Start with Account Lockout Duration (time that an account remains locked before it's automatically unlocked again). Select "Define this policy setting" and set it to **30 minutes**. Hit "Apply" then "OK".
 
@@ -218,9 +220,9 @@ Note that upon changing this setting, you'll automatically be offered other sugg
 
 ![image](https://github.com/user-attachments/assets/a8093460-018b-4c83-900f-132510d5c42d)
 
-Hit "OK" to move on and you'll change them right after. For Account Lockout Threshold (amount of failed login attempts that trigger a lockout), define **3 invalid login attempts**, and for Reset Account Lockout Counter After (time after which failed login attempts counter is reset) define 15 minutes.
+Hit "OK" to move on as you'll change them right after anyways. For Account Lockout Threshold (amount of failed login attempts that trigger a lockout), define **3 invalid login attempts**, and for Reset Account Lockout Counter After (time until the failed login attempts counter is reset) define **15 minutes**.
 
-After setting those values, you'll need to link the GPO to an Organizational Unit (OU) or domain wherein you want the policy to apply. Go back to the Group Policy Manager Window and right-click on your domain, then select "Link an Existing GPO". Within that window, select the one you just created: Account Lockout Policy.
+After setting those values, you'll need to link the GPO to an OU or domain wherein you want the policy to apply. Go back to the Group Policy Manager Window and right-click on your domain, then select "Link an Existing GPO". Within that window, select the one you just created: Account Lockout Policy.
 
 **NOTE**: While within the Group Policy Management window, underneath the "Group Policy Objects" branch, there is a policy called "Default Domain Policy". Since there is a parameter within this policy that interferes with our desired settings, we're going to disable it. Right click on "Default Domain Policy" then open "GPO Status" and select "All Settings Disabled":
 
@@ -229,39 +231,43 @@ After setting those values, you'll need to link the GPO to an Organizational Uni
 
 We'll now force a Group Policy update by opening Command Prompt and typing in "gpupdate /force", then hitting enter. To verify the policy, you can use the rsop.msc tool on a **client machine** to see the applied settings.
 
-Log into your client machine using your admin account, then go to the search box and type in "rsop.msc" and hit enter. Using the same expansion path as before (Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy), check to see if the settings you configured are in effect.
+Log into your client machine using your admin account, then go to the Windows search box, type in "rsop.msc" and hit enter. Using the same expansion path as before (Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy), check to see if the settings you configured are in effect.
 
 ![image](https://github.com/user-attachments/assets/963975ae-c0ab-4a47-ab4e-7df46bf5da15)
 
-With that, you've just configured your domain's account lockout policy! Let's get back dealing with account lockouts.
+With that, you've just configured your domain's account lockout policy! Now let's see how to deal with account lockouts.
 
 ### Account Lockouts
 
-Using the same account that you started this section off with, try to log in again to the client machine, this time with a bad password **three times**. Because of the GPO that we set up, you should receive a message saying that this account has been locked. 
+Using the same random account that you attempted to log in 10 times with, try to log in again to the client machine, this time with a bad password **three times**. Because of the GPO that we set up, you should receive a message saying that this account has been locked: 
 
 ![image](https://github.com/user-attachments/assets/219b3968-7517-4cbf-b792-668d4213b37f)
 
-You're GPO was successfully configured! Now log into the DC and unlock the account from within ADUC. Within your domain, right click on the employees OU and select "find". Type in the name of the account you locked out and hit enter. The account should pop up in the bottom section of the window. In turn, right click on the account and select "properties". Then navigate to the Account tab. Within it, you'll see a blank check box saying "Unlock account" next to it along with a small description of the account being locked: 
+If you do, you're GPO was successfully configured. Now log into the DC and unlock the account from within ADUC. 
+
+Within your domain, right click on the employees OU and select "find". Type in the name of the account you locked out and hit enter. The account should pop up in the bottom section of the window. In turn, right click on the account and select "properties". Then navigate to the Account tab. Within it, you'll see a blank check box saying "Unlock account" next to it along with a small description of the account being locked: 
 
 ![image](https://github.com/user-attachments/assets/284177ea-f63d-4f40-8915-823707cb7e98)
 
-Select the box then "Apply" and "OK" to finish unlocking it. Return to the client device and log in with the proper password to test the reset.
+Select the box then "Apply" and "OK" to finish unlocking it. Return to the client device and log in with the proper password to test the unlock.
 
 ### Enabling and Disabling Accounts
 
-Going back to the DC, open up ADUC and find the account within the employees OU. You can use the same "find" feature to do so. Right click on the account and, this time, select "Disable Account":
+Going back to the DC, open up ADUC and find the account within the employees OU. You can use the same "find" feature as above to do so. Right click on the account and, this time, select "Disable Account":
 
 ![image](https://github.com/user-attachments/assets/a8fd6210-cf73-49d8-8c96-847fd394f800)
 
 Attempt to log in with it and take note of the message that appears. After that, go back to ADUC and re-enable the account using the same method you used to disable (only difference is "Disable Account" will be "Enable Account"); log in with the account afterwards to ensure it's been enabled again.
 
-And finally for the last step of all: observing logs.
+Last but not least, we'll dive a little into observing logs.
 
 ### Observing Logs
 
-From within the client user account, type "eventvwr.msc" into the Windows search bar. Run it as an administrator and user your domain controller admin account credentials to authorize such. 
+From within the client user account, type "eventvwr.msc" into the Windows search bar. Run it as an administrator and user your domain controller admin account credentials to authorize. 
 
-Within the Event Viewer, in the left side column open "Windows Logs" then select "Security" to view the relevant log events. If you remember, as a part of our account lockout activities was to purposefully enter in incorrect passwords to force lock our account. Eventually, if you scroll down through the logs, you should find three "Audit Failure" logs with the Task Category of "Logon" grouped together: 
+Within the Event Viewer, in the left side column open "Windows Logs" then select "Security" to view the relevant log events. 
+
+Remember, a part of our account lockout activities was to purposefully enter in incorrect passwords to force lock our account. Eventually, if you scroll down through the logs, you should find three "Audit Failure" logs with the Task Category of "Logon" grouped together: 
 
 ![image](https://github.com/user-attachments/assets/4d932a40-1092-4564-9a07-c0ab35d1f3ca)
 
@@ -269,7 +275,11 @@ If you scroll further within the logs, you'll find the same thing, this time wit
 
 ![image](https://github.com/user-attachments/assets/d51446e1-abfb-401d-ab1a-fbf9dfc7e821)
 
-With that, you've seen how the actions we take appear within our event viewer. Not only that, but you've also finished this tutorial! If all has gone well, you should've gotten a better intuition as to how Active Directory works. Go through it mutltiple times to further strengthen that knowledge. 
+With that, you've seen how to observe certain action types within our event viewer.
+
+## Conclusion
+
+Congratulations for reaching the end of this tutorial! If all has gone according to plan, you should've gotten a better grasp with regards to both how to establish/configure your own Active Directory environment, as well as its inner workings. I would suggest going through it mutltiple times with increasingly less assistance from the tutorial to further strengthen intuition. Until next time!
 
 
 
