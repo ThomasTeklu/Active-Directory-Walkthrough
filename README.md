@@ -53,48 +53,45 @@ After that within the "IP configurations" pane, you should see an IP address nam
 
 Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. Let's remote into the DC virtual machine itself and open up the Control Panel. 
 
-**NOTE:** Upon openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes". Resuming:
+**NOTE:** Upon openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes". 
 
-# LEFT OFF HERE
-
-After that, click on "System and Security" -> "Windows Defender Firewall" -> "Advanced Settings". From within here, there should be a link titled "Windows Defender Firewall Properties". 
+After that, open the path of "System and Security" -> "Windows Defender Firewall" -> "Advanced Settings". Here, there should be a link titled "Windows Defender Firewall Properties". 
 
 ![image](https://github.com/user-attachments/assets/4b30beff-928a-4806-8d30-f0e2d8d6b36c)
 
-Click on it and a small window should pop it containing settings of the Windows firewall. In order to allow for connectivity testing, we're going to disable the firewall. This is rarely something that you would do, but for certain scenarios like ours, it'll be acceptable. 
+Click on it to open a Windows Firewall settings window. In order to allow for connectivity testing, we're going to disable the firewall. This is admittedly a bit abnormal, but for our purposes, it'll be acceptable. 
 
 In order to disable the firewall, go through each of the tabs within the window that contain a "Firewall state" section (Domain Profile, Private Profile, and Public Profile), and turn the state off for each of them. 
 
 ![image](https://github.com/user-attachments/assets/111227f5-8f02-44b9-b8c5-30367a53378c)
 
-Click "Apply" then "OK" to confirm these edits. You should then see your Windows Defender Firewall window looking like this:
+Click "Apply" then "OK" to confirm these choices. Your Windows Defender Firewall window should look like this:
 
 ![image](https://github.com/user-attachments/assets/865814c3-c0c9-4ad0-b7ac-71dad6fbf3ef)
 
-You can now close out of that window. We'll move on to setting up our client machine now.
+Close the window. We'll now set up our client machine.
 
-Back in Azure, create another virtual machine, this time with a Windows 10 Pro "image"/OS. Also, make sure to configure it to be in the same geographical location as well as the same virtual network as the DC.
+Back in Azure, create another virtual machine, this time with a Windows 10 Pro "image"/OS. As mentioned in a prior note, make sure it's in the same geographical location as well as the same virtual network as the DC.
 
-The next step will be to configure the client's DNS settings to the DC's private IP address. Of course for this you will need to locate the private IP address of the DC. Go again to the networks settings within the DC virtual machine settings. Again click on the network interface settings. This time however, we'll click on "DNS Servers": 
+The next step will be to configure the client's DNS settings to the DC's private IP address. First, locate the private IP address of the DC. Then, go to the network settings within the DC virtual machine module. Open the network interface settings, then click on "DNS Servers": 
 
 ![image](https://github.com/user-attachments/assets/9e152613-6887-4f72-8112-b04b6cbacd62)
 
-Change the setting from "Inherit from virtual network" to "Custom" then enter in the private IP address of your DC:
+Change the setting from "Inherit from virtual network" to "Custom", then enter in the private IP address of your DC:
 
 ![image](https://github.com/user-attachments/assets/5067db87-8b02-4271-a8d5-8a45190cb6fa)
 
-Don't forget to hit "Save" at the top when you're finished with that. Now we're ready to move to the last part of the Setup Section. From the Azure Portol, restart your client machine. Then remote log in to it. Using the command prompt, ping your DC's private IP address and ensure that it succeeded: 
+Don't forget to hit "Save" at the top when you're finished. Now we're ready to move to the last part of the Setup Section. 
+
+From the Azure Portol, restart your client machine. Then remote log in to it using its Azure Admin Account credentials. Using the command prompt, ping your DC's private IP address and ensure that it succeeded: 
 
 ![image](https://github.com/user-attachments/assets/528d556c-1351-446e-8340-ae3e35dfea70)
 
-Finally, open PowerShell and run **ipconfig /all**. The output for the DNS settings should have your DC's private IP address:
+Finally, open PowerShell and run **ipconfig /all**. The output for the DNS Server(s) should have your DC's private IP address:
 
 ![image](https://github.com/user-attachments/assets/a64c0075-e20f-48a7-b02e-ca61d7f7f08b)
 
-And with that, you have successfully completed your domain controller and client setup. In the next section below, you will be guiding through installation of Active Directory itself.
-
-
-
+With that, you have successfully completed your domain controller and client setup. In the next portion of the tutorial, you will be guided through the installation of Active Directory itself.
 
 # Installation of Active Directory
 
