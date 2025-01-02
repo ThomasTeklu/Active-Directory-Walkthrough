@@ -115,13 +115,11 @@ Click on it and then on the "Promote this server to a domain controller" prompt.
 
 ![image](https://github.com/user-attachments/assets/fbdc21a2-56e7-4f8a-9159-f5c4c3f0f51a)
 
-Hit "Next" to move on to "Domain Controller Options", then set your Directory Services Restore Mode password. Then keep clicking "Next" until you arrive at the "Prerequisites Check" page. If all checks out, you should see a small banner at the top of the window saying as much:
+Hit "Next" to move on to "Domain Controller Options", then set your Directory Services Restore Mode password. Select "Next" for the following pages until you arrive at "Prerequisites Check". If all checks out, you should see a small banner at the top of the window saying as much:
 
 ![image](https://github.com/user-attachments/assets/bfa743ff-76c2-45c4-ab19-4e6c915d028e)
 
-That's your green light to go ahead and hit "Install" and wait for that to come to a close. You will be logged out since the device has to restart. Upon logging back in, since your virtual machine is now properly a domain controller, your initial credentials won't work. You'll have to add your domain name and a backslash to the front of your username (mydomain.com\example). Your password will still remain as it was. Log in as described above, and then we'll move on to Internal Configuration.
-
-
+That's your green light to go ahead and hit "Install" then wait for that to come to a close. To enforce the changes, your virtual machine will restart and you will subsequently be logged out. Upon logging back in, your initial credentials won't work. You'll have to add your domain name and a backslash to the front of your username (mydomain.com\example.username). Your password will remain as it was. Log in as described above, and we'll move on to Internal Configuration.
 
 # Internal Configuration
 
