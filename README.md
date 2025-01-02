@@ -30,7 +30,9 @@ This tutorial outlines the implementation of Active Directory within Azure Virtu
 
 # Domain Controller and Client Setup
 
-To set up this Active Directory environment, we'll need to create two virtual machines within Azure: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual network and a subnet. The default settings will suffice.
+### Virtual Machines
+
+To set up this Active Directory environment, we'll need to create two virtual machines within Azure: one serving as a domain controller (DC), and one as a client. Open up Azure and create a resource group. Within the resource group, create a virtual network and a subnet. The default settings will suffice without any modification.
 
 After that, within that same resource group, create the virtual machine that will serve as the DC and name it accordingly (ex: DC-1, Domain-Controller, etc). Remember that in order for it to function as a DC, the "image" needs to be specifically Micorsoft Server OS. Either one of the two options displayed in the image below will work:
 
@@ -46,12 +48,16 @@ Then you need to select your network interface settings:
 
 ![image](https://github.com/user-attachments/assets/b5305161-8250-43c1-bca4-b29a4a8f27d7)
 
-After that within the "IP configurations" pane, you should see an IP address named "ipconfig1". Click on it to manage its settings. Now you should see the option to change the private address from Dynamic to Static. Select "Static" then hit "Save" at the bottom to finish up:
+After that within the "IP configurations" pane, you should see dark blue text named "ipconfig1". Click on it to manage its settings. Now you should see the option to change the private address from Dynamic to Static. Select "Static" then hit "Save" at the bottom to finish up:
 
 ![image](https://github.com/user-attachments/assets/204ffdf6-489f-471c-991d-f4ce02ce6ed1)
 
 
-Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. Let's remote into the DC virtual machine itself and open up the Control Panel. 
+Now that we've established the DC's private IP address as static, we're going to modify a certain setting that will allow us to test for connectivity in a little bit. 
+
+### Firewall Settings
+
+Let's remote into the DC virtual machine itself and open up the Control Panel. 
 
 **NOTE:** Upon openning/connecting a virtual machine for the first time, one of the initial configuration questions that will be asked is whether or not you want to "allow you PC to be discoverable by other PCs and devices on this network". Select "Yes". 
 
@@ -61,7 +67,7 @@ After that, open the path of "System and Security" -> "Windows Defender Firewall
 
 Click on it to open a Windows Firewall settings window. In order to allow for connectivity testing, we're going to disable the firewall. This is admittedly a bit abnormal, but for our purposes, it'll be acceptable. 
 
-In order to disable the firewall, go through each of the tabs within the window that contain a "Firewall state" section (Domain Profile, Private Profile, and Public Profile), and turn the state off for each of them. 
+In order to disable the firewall, go through each of the tabs within the window that contain a "Firewall state" option (Domain Profile, Private Profile, and Public Profile), and turn the state off for each of them. 
 
 ![image](https://github.com/user-attachments/assets/111227f5-8f02-44b9-b8c5-30367a53378c)
 
@@ -71,9 +77,11 @@ Click "Apply" then "OK" to confirm these choices. Your Windows Defender Firewall
 
 Close the window. We'll now set up our client machine.
 
-Back in Azure, create another virtual machine, this time with a Windows 10 Pro "image"/OS. As mentioned in a prior note, make sure it's in the same geographical location as well as the same virtual network as the DC.
+### Client Configuration
 
-The next step will be to configure the client's DNS settings to the DC's private IP address. First, locate the private IP address of the DC. Then, go to the network settings within the DC virtual machine module. Open the network interface settings, then click on "DNS Servers": 
+Back in Azure, create another virtual machine, this time with a Windows 10 Pro "image"/OS. As mentioned in a prior note, make sure it's in the same geographical location as well as the same virtual network as the DC. This VM will serve as the client device/machine.
+
+The next step will be to configure the client's DNS settings to the DC's private IP address. First, locate the private IP address of the DC. Then, go to the network settings within the client virtual machine module. Open the network interface settings, then click on "DNS Servers": 
 
 ![image](https://github.com/user-attachments/assets/9e152613-6887-4f72-8112-b04b6cbacd62)
 
@@ -82,6 +90,8 @@ Change the setting from "Inherit from virtual network" to "Custom", then enter i
 ![image](https://github.com/user-attachments/assets/5067db87-8b02-4271-a8d5-8a45190cb6fa)
 
 Don't forget to hit "Save" at the top when you're finished. Now we're ready to move to the last part of the Setup Section. 
+
+### Connectivity Test
 
 From the Azure Portol, restart your client machine. Then remote log in to it using its Azure Admin Account credentials. Using the command prompt, ping your DC's private IP address and ensure that it succeeded: 
 
