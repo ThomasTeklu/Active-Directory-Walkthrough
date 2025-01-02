@@ -123,39 +123,39 @@ That's your green light to go ahead and hit "Install" then wait for that to come
 
 # Internal Configuration
 
-Our first step in this section will be to create a Domain Admin user within the domain
+Our first step in this section will be to create a Domain Admin user within the domain.
 
-
-Open up Active Directory Users and Computers either by searching it in the Windows search bar, or by click the start menu then locating to Windows Administrative Tools:
+Open up Active Directory Users and Computers either by searching it in the Windows search bar, or by clicking the start menu, then locating to Windows Administrative Tools:
 
 ![image](https://github.com/user-attachments/assets/4026b7fe-b68f-491b-99e9-8ee0aa5b9512)
 
 Right click **on** your domain name itself then select "New" and "Organizational Unit". Name it "_EMPLOYEES" (include the underscore in the front). Using the same technique, create another OU named "_ADMINS". 
 
-Within the Employees folder (remember, right clicking on it) create a "user". We'll name them "Jane Doe" with a username of "jane_admin". The password is up to you, just remember to keep track of it of course:
+Within the Employees folder (remember, right clicking on it) create a "user". We'll name them "Jane Doe" with a username of "jane_admin". The password will be up to you, just remember to keep track of it:
 
 ![image](https://github.com/user-attachments/assets/cb62fd21-c3aa-45ec-a55b-e2df1c423a0c)
 
-When moving on from username to password creation, deselect the check mark next to "User must change password at next login"
+Select "Next" to create password. Deselect the check mark next to "User must change password at next login":
 
 ![image](https://github.com/user-attachments/assets/0c26c3d0-d045-4feb-b973-55c32b043ae3)
 
-You should now have a new user named "Jane Doe" within your employees group. Now to actually give this account admin privileges, we need to add it to the "Domain Admins" Security Group. Right click on the account and hit "Properties". Within the Properties window, go to the "Member Of" tab and select "Add":
+Select "Next" then "Finish" and you should now have a new user named "Jane Doe" within your employees group. Now to actually give this account admin privileges, we need to add it to the "Domain Admins" Security Group. 
+
+Right click on the account and hit "Properties". Within the Properties window, go to the "Member Of" tab and select "Add":
 
 ![image](https://github.com/user-attachments/assets/f3e340e7-9cec-4edc-8cd3-135aee637cfb)
 
-You'll be taken to another window to select which groups you want to add this account to. In the field enter "Domain Admins" and hit enter. Automatically you'll be taken back to the "Members Of" tab and you should see "Domain Admins" within the panel now: 
+You'll be taken to another window to select which groups you want to add this account to. In the "Enter the object names" field enter "Domain Admins" and hit enter. Automatically you'll be taken back to the "Members Of" tab and you should see "Domain Admins" within "Members Of" the panel now: 
 
 ![image](https://github.com/user-attachments/assets/48a8089b-cbe4-4c8f-afc0-affaf05adb7c)
 
 To wrap this step up, click "Apply" and "OK" at the bottom of the window.
 
-For organizational measures, right click on Jane Doe and select the "move" option. Move her to the newly-created Admin Security Group. Open the Admins folder to confirm the move was succesful. 
+For organizational measures, right click on Jane Doe and select the "move" option. Move her to the newly-created _ADMINS organizational unit. Open it to confirm the move was succesful. 
 
 Log out and log back in as "mydomain.com\jane_admin" and use jane_admin as your admin account from here on out.
 
-
-So now we have established Active Directory services on our server, created our domain, and have designated a particular account as our admin account for the DC. Having focused on our server-side configuration so much, let's go on and move towards setting up our client-side as well.
+To sum up so far, you established Active Directory services on your server, created your domain, and created your admin account for the DC. Having focused on our server-side configuration so much, let's move towards setting up the client-side as well.
 
 ### Joining Client to Domain
 
@@ -163,20 +163,19 @@ Log in to the client machine as the original local admin. Then, right click on t
 
 ![image](https://github.com/user-attachments/assets/7adc325b-b972-4ba0-91e6-09e8dee166a8)
 
-From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will show, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. Use your credentials (with the domain specification at the beginning) to authorize this domain joining. When that's done, you'll get a "Welcome to the domain" message. Close that and your device will automatically restart to enforce the changes just made.
+From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will show, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. 
 
-Verify that your client device shows up in Active Directory Users and Computers (ADUC) by logging back into your DC. Create a new OU named "_CLIENTS" and put your client device in there.
+Use your DC admin credentials (with the domain specification at the beginning) to authorize joining the domain. When that's done, you'll get a "Welcome to the domain" message. Close that and your device will automatically restart to enforce the changes just made.
+
+Verify that your client device was joined to the domain by logging back into your DC and checking the "Computers" container in Active Directory Users and Computers (ADUC). Create a new OU named "_CLIENTS" and put your client device in there.
 
 With that, you have successfully joined your client machine to your domain.
 
-
-
 ### Setup Remote Desktop
 
-Now you will enable Remote Desktop for non-administrative users on the client device. Log into the client device, this time as your domain admin account. Right click on the start icon then select "System". Inside of that select "Remote Desktop" and within the "Remote Desktop Users" window that pops up select "Add". 
+Now you will enable Remote Desktop for non-administrative users on the client device. Log into the client device, this time as your domain admin account. Right click on the start icon then select "System". Inside of that, select "Remote Desktop" and within the "Remote Desktop Users" window that pops up select "Add". 
 
-You will then enter "Domain Users" in the object names field and hit enter. Select "Ok" after that and you've now enabled any domain user (even non-administrative ones) to log into the client device.
-
+You will then enter "Domain Users" in the object names field and hit enter. Select "Ok". You've now enabled any domain user (even non-administrative ones) to remotely log into the client device.
 
 ### Creating Users
 
@@ -187,7 +186,7 @@ Log in to your DC as jane_admin. Open PowerShell_ise **as an administrator** and
 
 When finished, open up ADUC and observe the accounts in the appropriate OU (_EMPLOYEES).
 
-As a final test, attempt to log into Client-1 with one of the accounts (remember to take note of the password from within the script).
+As a final test, attempt to log into Client-1 with one of the accounts (remember to take note of the password from the top of the script).
 
 
 # Account Management
