@@ -139,13 +139,13 @@ Upon logging back in, your initial credentials won't work. You'll have to add yo
 
 Our first step in this section will be to create a Domain Admin user within the domain.
 
-Open up Active Directory Users and Computers either by searching it in the Windows search bar, or by clicking the start menu, then locating to Windows Administrative Tools:
+Open up Active Directory Users and Computers within the DC either by searching for it in the Windows search bar, or by clicking the start menu, then locating to Windows Administrative Tools:
 
 ![image](https://github.com/user-attachments/assets/4026b7fe-b68f-491b-99e9-8ee0aa5b9512)
 
-Right click **on** your domain name itself then select "New" and "Organizational Unit". Name it "_EMPLOYEES" (include the underscore in the front). Using the same technique, create another OU named "_ADMINS". 
+Right click **on** your domain name itself then select "New" then "Organizational Unit". Name it "_EMPLOYEES" (include the underscore in the front). Using the same technique, create another OU named "_ADMINS". 
 
-Within the Employees folder (remember, right clicking on it) create a "user". We'll name them "Jane Doe" with a username of "jane_admin". The password will be up to you, just remember to keep track of it:
+Within the Employees container (remember, right clicking on it) create a "user". We'll name them "Jane Doe" with a username of "jane_admin". The password will be up to you, just remember to keep track of it:
 
 ![image](https://github.com/user-attachments/assets/cb62fd21-c3aa-45ec-a55b-e2df1c423a0c)
 
@@ -153,13 +153,13 @@ Select "Next" to create password. Deselect the check mark next to "User must cha
 
 ![image](https://github.com/user-attachments/assets/0c26c3d0-d045-4feb-b973-55c32b043ae3)
 
-Select "Next" then "Finish" and you should now have a new user named "Jane Doe" within your employees group. Now to actually give this account admin privileges, we need to add it to the "Domain Admins" Security Group. 
+Select "Next" then "Finish" and you should now have a new user named "Jane Doe" within your employees container. Now to actually give this account admin privileges, we need to add it to the "Domain Admins" Security Group. 
 
 Right click on the account and hit "Properties". Within the Properties window, go to the "Member Of" tab and select "Add":
 
 ![image](https://github.com/user-attachments/assets/f3e340e7-9cec-4edc-8cd3-135aee637cfb)
 
-You'll be taken to another window to select which groups you want to add this account to. In the "Enter the object names" field enter "Domain Admins" and hit enter. Automatically you'll be taken back to the "Members Of" tab and you should see "Domain Admins" within "Members Of" the panel now: 
+You'll be taken to another window to select which groups you want to add this account to. In the "Enter the object names" field enter "Domain Admins" and hit enter. Automatically you'll be taken back to the "Members Of" tab and you should see "Domain Admins" within the "Members Of" panel now: 
 
 ![image](https://github.com/user-attachments/assets/48a8089b-cbe4-4c8f-afc0-affaf05adb7c)
 
@@ -173,11 +173,13 @@ To sum up so far, you established Active Directory services on your server, crea
 
 ### Joining Client to Domain
 
-Log in to the client machine as the original local admin. Then, right click on the start icon in the bottom left corner. From there, click "System" and within the window that pops up, select "System Protection". Switch to the "Computer Name" tab and that's where you will see the option to "rename this computer or change its domain or workgroup":
+Log in to the client machine as the original local admin. Then, right click on the start icon in the bottom left corner. From there, click "System" and within the window that pops up, select "System Protection". 
+
+Switch to the "Computer Name" tab and that's where you will see the option to "rename this computer or change its domain or workgroup":
 
 ![image](https://github.com/user-attachments/assets/7adc325b-b972-4ba0-91e6-09e8dee166a8)
 
-From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will show, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. 
+From there, select the "Domain" option under "Member of" and enter in your domain name in the field. When you click "OK", a Windows Security panel will appear, asking you to use an account with permission to join the domain. This is where your DC admin account will come in handy. 
 
 Use your DC admin credentials (with the domain specification at the beginning) to authorize joining the domain. When that's done, you'll get a "Welcome to the domain" message. Close that and your device will automatically restart to enforce the changes just made.
 
@@ -187,9 +189,13 @@ With that, you have successfully joined your client machine to your domain.
 
 ### Setup Remote Desktop
 
-Now you will enable Remote Desktop for non-administrative users on the client device. Log into the client device, this time as your domain admin account. Right click on the start icon then select "System". Inside of that, select "Remote Desktop" and within the "Remote Desktop Users" window that pops up select "Add". 
+Now you will enable Remote Desktop for non-administrative users on the client device. 
 
-You will then enter "Domain Users" in the object names field and hit enter. Select "Ok". You've now enabled any domain user (even non-administrative ones) to remotely log into the client device.
+Log into the client device, this time as your domain admin account. Right click on the start icon then select "System". Inside of that, select "Remote Desktop" and within the "Remote Desktop Users" window that pops up select "Add". 
+
+You will then enter "Domain Users" in the object names field and hit enter. Select "Ok". 
+
+You've now enabled any domain user (even non-administrative ones) to remotely log into the client device.
 
 ### Creating Users
 
