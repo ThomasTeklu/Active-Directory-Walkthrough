@@ -109,11 +109,11 @@ Remote into your DC. Since the domain controller is running Windows Server OS, t
 
 ![image](https://github.com/user-attachments/assets/32481eb9-60da-4a4d-b76e-39b1dae3d715)
 
-Next, to turn this "blank" (so to speak) server into an Active Directory server, first click on "Add roles and features". For the "Before You Begin", "Installation Type", and "Server Selection" pages, select "Next". When you then arrive at the "Server Roles" page, you will see a long list of potential services that you could configure to run on your server. We are concerned with **Active Directory Domain Services**, so that is what we'll select from the list:
+Next, to turn this "blank" (so to speak) server into an Active Directory server, first click on "Add roles and features". For the "Before You Begin", "Installation Type", and "Server Selection" pages, select "Next". When you then arrive at the "Server Roles" page, you will see a long list of potential services that you could configure to run on your server. We are concerned with **Active Directory Domain Services**, so that is what we'll select:
 
 ![image](https://github.com/user-attachments/assets/09da0585-46b7-4246-8eb5-9505ab770b1e)
 
-Upon selecting its check mark to enable the features, a pop-up window will appear asking to add additional features that are needed for Active Directory. Click "Add Features" then "Next" back in the original window. For the "Features" and "AD DS" pages select "Next" and then within the Confirmation page, check the option for automatic restart:
+Upon selecting its check mark to enable the features, a pop-up window will appear asking to add additional features that are needed for Active Directory. Click "Add Features" then "Next" back in the original window. For the "Features" and "AD DS" pages select "Next" and within the Confirmation page, check the option for automatic restart:
 
 ![image](https://github.com/user-attachments/assets/d836a7dd-086b-4fa9-a6f4-fbcd15709722)
 
@@ -125,11 +125,15 @@ Click on it and then on the "Promote this server to a domain controller" prompt.
 
 ![image](https://github.com/user-attachments/assets/fbdc21a2-56e7-4f8a-9159-f5c4c3f0f51a)
 
-Hit "Next" to move on to "Domain Controller Options", then set your Directory Services Restore Mode password. Select "Next" for the following pages until you arrive at "Prerequisites Check". If all checks out, you should see a small banner at the top of the window saying as much:
+Hit "Next" to move on to "Domain Controller Options", then set your Directory Services Restore Mode password. 
+
+Select "Next" for the following pages until you arrive at "Prerequisites Check". If all checks out, you should see a small banner at the top of the window saying as much:
 
 ![image](https://github.com/user-attachments/assets/bfa743ff-76c2-45c4-ab19-4e6c915d028e)
 
-That's your green light to go ahead and hit "Install" then wait for that to come to a close. To enforce the changes, your virtual machine will restart and you will subsequently be logged out. Upon logging back in, your initial credentials won't work. You'll have to add your domain name and a backslash to the front of your username (mydomain.com\example.username). Your password will remain as it was. Log in as described above, and we'll move on to Internal Configuration.
+That's your green light to go ahead and hit "Install". Upon completion, your virtual machine will restart to enforce the changes and you will subsequently be logged out. 
+
+Upon logging back in, your initial credentials won't work. You'll have to add your domain name and a backslash to the front of your username (mydomain.com\ExampleUsername). Your password will remain as it was. Log in as described above, and we'll move on to Internal Configuration.
 
 # Internal Configuration
 
