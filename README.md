@@ -95,23 +95,23 @@ With that, you have successfully completed your domain controller and client set
 
 # Installation of Active Directory
 
-Remote into your DC. Since the domain controller is running on Windows Server OS, the initial view will be different from other OS's. You should immediately see the Server Manager open upon login:
+Remote into your DC. Since the domain controller is running Windows Server OS, the initial view will be different from other OS's. You should immediately see the Server Manager window upon login:
 
 ![image](https://github.com/user-attachments/assets/32481eb9-60da-4a4d-b76e-39b1dae3d715)
 
-Next, to turn this "blank" (so to speak) server into an Active Directory server, first click on "Add roles and features". For the "Before You Begin", "Installation Type", and "Server Selection" pages, select "Next". Then when you arrive at the "Server Roles" page, you will see a long list of potential services that you could configure to run on your server. We are concerned with Active Directory Domain Services, so that is what we'll select from the list:
+Next, to turn this "blank" (so to speak) server into an Active Directory server, first click on "Add roles and features". For the "Before You Begin", "Installation Type", and "Server Selection" pages, select "Next". When you then arrive at the "Server Roles" page, you will see a long list of potential services that you could configure to run on your server. We are concerned with **Active Directory Domain Services**, so that is what we'll select from the list:
 
 ![image](https://github.com/user-attachments/assets/09da0585-46b7-4246-8eb5-9505ab770b1e)
 
-Upon selecting its check mark to enable the features, a pop-up window will appear asking to add additional features that are needed for Active Directory. Click "Add Features" then "Next" back in the original window. For "Features" and "AD DS" select "Next" and then within the Confirmation section, check the option for automatic restart:
+Upon selecting its check mark to enable the features, a pop-up window will appear asking to add additional features that are needed for Active Directory. Click "Add Features" then "Next" back in the original window. For the "Features" and "AD DS" pages select "Next" and then within the Confirmation page, check the option for automatic restart:
 
 ![image](https://github.com/user-attachments/assets/d836a7dd-086b-4fa9-a6f4-fbcd15709722)
 
-Now hit "Install" and wait for it to complete. Upon completion, you should see the flag icon at the top right has a hazard sign next to it:
+Select "Install". Upon completion, you should see the flag icon at the top right has a hazard sign next to it:
 
 ![image](https://github.com/user-attachments/assets/1229a7df-4375-4dc4-85fa-0f806d2d2180)
 
-Click on it and then on the "Promote this server to a domain controller" prmopt. From there, select the "Add a new forest" option and specify your desired domain name (i.e. {yourdomainname}.com):
+Click on it and then on the "Promote this server to a domain controller" prompt. From there, select the "Add a new forest" option and specify your desired domain name (i.e. [yourdomainname].com):
 
 ![image](https://github.com/user-attachments/assets/fbdc21a2-56e7-4f8a-9159-f5c4c3f0f51a)
 
