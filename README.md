@@ -21,7 +21,7 @@ This tutorial outlines the implementation of Active Directory within Azure Virtu
 - Windows Server 2022
 - Windows 10 (21H2)
 
-<h2>High-Level Deployment and Configuration Steps</h2>
+<h2> General Deployment and Configuration Steps</h2>
 
 - Domain Controller and Client Setup
 - Installation of Active Directory
