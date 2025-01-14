@@ -3,7 +3,7 @@
 </p>
 
 <h1>Active Directory Walkthrough (Azure Deployment)</h1>
-This tutorial outlines the implementation of Active Directory within Azure Virtual Machines. In addition to implementation, a walkthrough of specific features utilizable within Active Directory is provided to enable the reader to become practically (that is, technically) comfortable with the environment. Through completion of this tutorial, one should attain a better understanding of Active Directory overall, as well as consituent elements such as domain controllers, client devices, administrative value, security policies, account management, etc. <br />
+This tutorial outlines the implementation of Active Directory within Azure Virtual Machines. In addition to implementation, a walkthrough of specific features utilizable within Active Directory is provided to enable the reader to become practically (that is, technically) comfortable with the environment. Through completion of this tutorial, one should attain a better understanding of Active Directory overall, as well as constituent elements such as domain controllers, client devices, administrative value, security policies, account management, etc. <br />
 
 
 
